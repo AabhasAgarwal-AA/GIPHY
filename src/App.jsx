@@ -4,6 +4,7 @@ import AppLayout from './layouts/app-layout'
 import Home from './pages/home'
 import Categories from './pages/Category'
 import Search from './pages/search'
+// import GifPage from './pages/Single-gif'
 import Favourites from './pages/favourites'
 import GifProvider from './context/gif-context'
 
