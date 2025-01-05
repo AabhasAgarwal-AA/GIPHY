@@ -4,9 +4,9 @@ import AppLayout from './layouts/app-layout'
 import Home from './pages/home'
 import Categories from './pages/Category'
 import Search from './pages/search'
-// import GifPage from './pages/Single-gif'
 import Favourites from './pages/favourites'
 import GifProvider from './context/gif-context'
+import gifPage from './pages/singlegif'
 
 const router = createBrowserRouter([
   {
@@ -24,10 +24,10 @@ const router = createBrowserRouter([
         path: '/search/:query',
         element: <Search />
       },
-      // {
-      //   path: '/:type/:slug',
-      //   element: <GifPage />
-      // },
+      {
+        path: '/:type/:slug',
+        element: <gifPage />
+      },
       {
         path: '/favourites',
         element: <Favourites />
