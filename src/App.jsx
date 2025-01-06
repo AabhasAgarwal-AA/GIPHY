@@ -2,11 +2,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import AppLayout from './layouts/app-layout'
 import Home from './pages/home'
-import Categories from './pages/Category'
+import Categories from './pages/category'
 import Search from './pages/search'
 import Favourites from './pages/favourites'
 import GifProvider from './context/gif-context'
-import gifPage from './pages/singlegif'
+import GifPage from './pages/singlegif'
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/:type/:slug',
-        element: <gifPage />
+        element: <GifPage />
       },
       {
         path: '/favourites',

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import Gif from "../components/Gif";
+import Gif from "../components/gif";
 import { GifState } from "../context/gif-context";
 
 const Favorites = () => {
-  const { giphy, favorites } = GifState();
+  const { gf, favorites } = GifState();
   const [favoriteGIFs, setFavoriteGIFs] = useState([]);
 
   const fetchFavoriteGIFs = async () => {
-    const { data: gifs } = await giphy.gifs(favorites);
+    const { data: gifs } = await gf.gifs(favorites);
     setFavoriteGIFs(gifs);
   };
 

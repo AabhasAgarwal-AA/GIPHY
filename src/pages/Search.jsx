@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { GifState } from "../context/gif-context";
 import { useParams } from "react-router-dom";
-import Gif from "../components/Gif";
-import FilterGif from "../components/Filter-Gif";
+import Gif from "../components/gif";
+import FilterGif from "../components/filter-gif";
 
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const { giphy, filter } = GifState();
+
+  const { gf, filter } = GifState();
+
   const { query } = useParams();
 
   const fetchSearchResults = async () => {
-    const { data } = await giphy.search(query, {
+    const { data } = await gf.search(query, {
       sort: "relevant",
       lang: "en",
       type: filter,
       limit: 20,
     });
+
     setSearchResults(data);
   };
 

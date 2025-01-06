@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { GifState } from "../context/gif-context";
 import { useParams } from "react-router-dom";
-import Gif from "../components/Gif";
+import Gif from "../components/gif";
 
 const Category = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const { giphy } = GifState();
+
+  const { gf } = GifState();
+
   const { category } = useParams();
 
   const fetchSearchResults = async () => {
-    const { data } = await giphy.gifs(category, category);
+    const { data } = await gf.gifs(category, category);
+
     setSearchResults(data);
   };
 

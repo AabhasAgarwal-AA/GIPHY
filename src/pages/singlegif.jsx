@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GifState } from "../context/gif-context";
-import Gif from "../components/Gif";
+import Gif from "../components/gif";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { HiMiniChevronDown, HiMiniChevronUp, HiMiniHeart } from "react-icons/hi2";
 import { FaPaperPlane } from "react-icons/fa6";
@@ -9,13 +9,13 @@ import { IoCodeSharp } from "react-icons/io5";
 
 const contentType = ["gifs", "stickers", "texts"];
 
-const gifPage = () => {
+const GifPage = () => {
     const { type, slug } = useParams();
     const [gif, setGif] = useState({});
     const [relatedGifs, setRelatedGifs] = useState([]);
     const [readMore, setReadMore] = useState(false);
 
-    const { giphy, addToFavorites, favorites } = GifState();
+    const { gf, addToFavorites, favorites } = GifState();
 
     useEffect(() => {
         if (!contentType.includes(type)) {
@@ -23,8 +23,8 @@ const gifPage = () => {
         }
         const fetchGif = async () => {
             const gifId = slug.split("-");
-            const { data } = await giphy.gif(gifId[gifId.length - 1]);
-            const { data: related } = await giphy.related(gifId[gifId.length - 1], {
+            const { data } = await gf.gif(gifId[gifId.length - 1]);
+            const { data: related } = await gf.related(gifId[gifId.length - 1], {
                 limit: 10,
             });
             setGif(data);
@@ -56,6 +56,7 @@ const gifPage = () => {
         alert("Embed code copied to clipboard!");
     };
 
+
     return (
         <div className="grid grid-cols-4 my-10 gap-4">
             <div className="hidden sm:block">
@@ -74,8 +75,13 @@ const gifPage = () => {
                         </div>
                         {gif?.user?.description && (
                             <p className="py-4 whitespace-pre-line text-sm text-gray-400">
-                                {readMore ? gif?.user?.description : gif?.user?.description.slice(0, 100) + "..."}
-                                <div className="flex items-center faded-text cursor-pointer" onClick={() => setReadMore(!readMore)}>
+                                {readMore
+                                    ? gif?.user?.description
+                                    : gif?.user?.description.slice(0, 100) + "..."}
+                                <div
+                                    className="flex items-center faded-text cursor-pointer"
+                                    onClick={() => setReadMore(!readMore)}
+                                >
                                     {readMore ? (
                                         <>
                                             Read less <HiMiniChevronUp size={20} />
@@ -95,7 +101,9 @@ const gifPage = () => {
 
                 {gif?.source && (
                     <div>
-                        <span className="faded-text">
+                        <span
+                            className="faded-text" //custom - faded-text
+                        >
                             Source
                         </span>
                         <div className="flex items-center text-sm font-bold gap-1">
@@ -111,10 +119,10 @@ const gifPage = () => {
             <div className="col-span-4 sm:col-span-3">
                 <div className="flex gap-6">
                     <div className="w-full sm:w-3/4">
-                        <div className="faded-text truncate mb-2">
-                            {gif.title}
-                        </div>
+                        <div className="faded-text truncate mb-2">{gif.title}</div>
                         <Gif gif={gif} hover={false} />
+
+                        {/* -- Mobile UI -- */}
                         <div className="flex sm:hidden gap-1">
                             <img
                                 src={gif?.user?.avatar_url}
@@ -132,15 +140,17 @@ const gifPage = () => {
                             <button className="ml-auto" onClick={EmbedGif}>
                                 <IoCodeSharp size={30} />
                             </button>
-                            <button className="ml-auto" onClick={() => addToFavorites(gif.id)}>
+                            <button className={`ml-auto ${favorites.includes(gif.id) ? "text-red-500" : ""}`} onClick={() => addToFavorites(gif.id)}>
                                 <HiMiniHeart size={30} />
                             </button>
+
                         </div>
+                        {/* -- Mobile UI -- */}
                     </div>
 
                     <div className="hidden sm:flex flex-col gap-5 mt-6">
-                        <button onClick={() => addToFavorites(gif.id)} className="flex gap-5 items-center font-bold text-lg">
-                            <HiMiniHeart size={30} className={`${favorites.includes(gif.id) ? "text-red-500" : ""}`} />
+                        <button onClick={() => addToFavorites(gif.id)}className="flex gap-5 items-center font-bold text-lg">
+                            <HiMiniHeart size={30} className={`${favorites.includes(gif.id) ? "text-red-500" : ""}`}/>
                             Favorite
                         </button>
                         <button onClick={shareGif} className="flex gap-6 items-center font-bold text-lg">
@@ -167,4 +177,4 @@ const gifPage = () => {
     );
 };
 
-export default gifPage;
+export default GifPage;
